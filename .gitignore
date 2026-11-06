@@ -1,0 +1,21 @@
+database/
+data/
+outputs/
+AGENTS.md
+
+# Python & Environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+*.swp
+

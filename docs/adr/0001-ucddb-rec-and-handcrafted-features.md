@@ -1,0 +1,3 @@
+# Use UCDDB Polysomnography Recordings and Hand-Crafted Multi-Modal Features
+
+We use the 25-subject UCDDB polysomnography (`<id>.rec`) files as the canonical signal source—ignoring the unaligned Holter (`<id>_lifecard.edf`) files—and extract hand-crafted physiological Feature vectors across all 14 common PSG channels for classical machine learning (XGBoost). While `_lifecard.edf` provides 3-lead ECG, its start clock does not match `<id>_respevt.txt` and it lacks respiratory, oximetry, and neurological signals. Extracting explicit time-domain, spectral, HRV, thoracoabdominal paradox, and baseline-relative features converts high-frequency 1D waveforms into interpretable tabular representations suited to gradient-boosted trees without requiring deep 1D-CNN pretraining.
