@@ -1,0 +1,127 @@
+seed: 42
+
+paths:
+  raw_data_dir: "database/files"
+  processed_dir: "data/processed"
+  features_dir: "data/processed/features"
+  splits_path: "data/processed/splits.json"
+  scaler_path: "data/processed/scaler.joblib"
+
+channels:
+  canonical:
+    - "C3A2"
+    - "C4A1"
+    - "Lefteye"
+    - "RightEye"
+    - "EMG"
+    - "ECG"
+    - "SpO2"
+    - "Pulse"
+    - "Flow"
+    - "Sum"
+    - "ribcage"
+    - "abdo"
+    - "Sound"
+    - "BodyPos"
+  aliases:
+    Soud: "Sound"
+  sampling_rates:
+    C3A2: 128.0
+    C4A1: 128.0
+    Lefteye: 64.0
+    RightEye: 64.0
+    EMG: 64.0
+    ECG: 128.0
+    SpO2: 8.0
+    Pulse: 8.0
+    Flow: 8.0
+    Sum: 8.0
+    ribcage: 8.0
+    abdo: 8.0
+    Sound: 8.0
+    BodyPos: 8.0
+
+filters:
+  ecg:
+    type: "bandpass"
+    lowcut_hz: 0.5
+    highcut_hz: 40.0
+    order: 4
+  neuro:
+    type: "bandpass"
+    lowcut_hz: 0.5
+    highcut_hz: 35.0
+    order: 4
+  emg:
+    type: "bandpass"
+    lowcut_hz: 10.0
+    highcut_hz: 30.0
+    order: 4
+  respiratory:
+    type: "bandpass"
+    lowcut_hz: 0.05
+    highcut_hz: 2.0
+    order: 4
+  sound:
+    type: "highpass"
+    lowcut_hz: 0.5
+    order: 4
+  spo2:
+    type: "interpolate_median"
+    valid_min: 50.0
+    valid_max: 100.0
+    median_kernel_size: 3
+  pulse:
+    type: "interpolate_median"
+    valid_min: 25.0
+    valid_max: 220.0
+    median_kernel_size: 3
+  bodypos:
+    type: "passthrough"
+
+windowing:
+  window_sec: 30
+  stride_sec: 30
+  overlap_threshold_sec: 5.0
+  valid_events:
+    - "APNEA-O"
+    - "APNEA-C"
+    - "APNEA-M"
+    - "HYP-O"
+    - "HYP-C"
+    - "HYP-M"
+  ignored_events:
+    - "PB"
+    - "POSSIBLE"
+  event_aliases:
+    "PB EVENT": "PB"
+  exclude_wake: true
+
+features:
+  hrv_context_sec: 120
+  spo2_lag_sec: 15
+  baseline_window_sec: 300
+  rpeak_min_distance_sec: 0.35
+  rr_min_ms: 300.0
+  rr_max_ms: 2000.0
+  spo2_baseline_percentile: 90.0
+  spo2_desat_threshold_pct: 3.0
+  spo2_hypoxia_threshold_pct: 90.0
+  resp_band_hz: [0.1, 0.5]
+  hrv_bands_hz:
+    vlf: [0.0033, 0.04]
+    lf: [0.04, 0.15]
+    hf: [0.15, 0.4]
+  eeg_bands_hz:
+    delta: [0.5, 4.0]
+    theta: [4.0, 8.0]
+    alpha: [8.0, 12.0]
+    sigma: [12.0, 16.0]
+    beta: [16.0, 30.0]
+
+splitting:
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
+  ahi_moderate_threshold: 15.0
+  ahi_severe_threshold: 30.0
