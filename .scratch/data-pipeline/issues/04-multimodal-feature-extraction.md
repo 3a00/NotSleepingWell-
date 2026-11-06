@@ -6,11 +6,11 @@
 
 **Type:** task
 
-**Status:** ready-for-agent
+**Status:** resolved
 
 ## Acceptance Criteria
 
-- [ ] `src/pipeline/features.py` implemented with type hints, Google-style docstrings, and modular feature-group functions controlled by `config.yaml`:
+- [x] `src/pipeline/features.py` implemented with type hints, Google-style docstrings, and modular feature-group functions controlled by `config.yaml`:
   - `precompute_recording_context(signals, sampling_rates, config)`:
     - Detects R-peaks on continuous filtered `ECG` (128 Hz) using `scipy.signal.find_peaks` with minimum distance (`0.35 s`) and adaptive prominence; computes RR intervals (`ms`) and valid physiological mask (`300–2000 ms`).
     - Precomputes 5-minute (`300 s`) rolling baseline arrays for `SpO2` (rolling 90th percentile) and respiratory channels `Flow`, `Sum`, `ribcage`, `abdo` (rolling RMS and peak-to-peak amplitude).
@@ -20,7 +20,7 @@
   - `extract_sound_bodypos_features(...)`: `sound_rms`, `sound_max`, `sound_std`, `sound_crest_factor`, `sound_burst_ratio`, `bodypos_mode`, `bodypos_changed`.
   - `extract_neuro_features(...)`: Relative Welch band powers (`delta`, `theta`, `alpha`, `sigma`, `beta`), `alpha_delta_ratio`, and `spectral_entropy` for `C3A2` and `C4A1`; `eog_std`, `eog_ptp`, `eog_corr` for `Lefteye`/`RightEye`; `emg_rms`, `emg_std`, `emg_median_freq` for `EMG`.
   - `extract_recording_features(recording_data, filtered_signals, windows, config)` returning a `pd.DataFrame` where every row is one Window with metadata columns + deterministic float32 feature columns, guaranteed free of `NaN` or `Inf` values.
-- [ ] Unit test `tests/test_features.py` verifying:
+- [x] Unit test `tests/test_features.py` verifying:
   - Deterministic column list and zero `NaN`/`Inf` across a full Recording (`ucddb002`).
   - Anti-phase synthetic `ribcage` and `abdo` sine waves produce `rib_abdo_corr < -0.95` (thoracoabdominal paradox verification).
   - Simulated `+10 s` delayed SpO₂ drop of `5%` after Window end is captured by `spo2_lag_drop >= 4.5` and `spo2_ods_3pct == 1.0`.
