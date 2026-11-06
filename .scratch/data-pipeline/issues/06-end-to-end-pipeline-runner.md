@@ -6,14 +6,14 @@
 
 **Type:** task
 
-**Status:** ready-for-agent
+**Status:** resolved
 
 ## Acceptance Criteria
 
-- [ ] `scripts/run_pipeline.py` implemented with CLI arguments (`--config config.yaml`, optional `--force` to recompute cached per-Recording Parquet files).
-- [ ] Processes Recordings sequentially (one Recording in memory at a time, using `gc.collect()` between Recordings) and writes 25 Parquet files to `data/processed/features/<id>.parquet`.
-- [ ] Executes `data_split.py` to generate `data/processed/splits.json`, `data/processed/scaler.joblib`, and `data/processed/{train,val,test}.parquet`.
-- [ ] Writes `outputs/pipeline_summary.json` reporting total Recordings, Windows per split, positive Apnea Window ratios per split, feature count, and peak RAM usage.
-- [ ] Full test suite (`pytest tests/`) and full pipeline execution (`python scripts/run_pipeline.py --config config.yaml`) run cleanly with exit code 0 and zero `NaN`/`Inf` values in any generated Parquet file.
+- [x] `scripts/run_pipeline.py` implemented with CLI arguments (`--config config.yaml`, optional `--force` to recompute cached per-Recording Parquet files).
+- [x] Processes Recordings sequentially (one Recording in memory at a time, using `gc.collect()` between Recordings) and writes 25 Parquet files to `data/processed/features/<id>.parquet`.
+- [x] Executes `data_split.py` to generate `data/processed/splits.json`, `data/processed/scaler.joblib`, and `data/processed/{train,val,test}.parquet`.
+- [x] Writes `outputs/pipeline_summary.json` reporting total Recordings, Windows per split, positive Apnea Window ratios per split, feature count, and peak RAM usage.
+- [x] Full test suite (`pytest tests/`) and full pipeline execution (`python scripts/run_pipeline.py --config config.yaml`) run cleanly with exit code 0 and zero `NaN`/`Inf` values in any generated Parquet file.
 
 ## Comments

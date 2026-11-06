@@ -6,6 +6,7 @@ paths:
   features_dir: "data/processed/features"
   splits_path: "data/processed/splits.json"
   scaler_path: "data/processed/scaler.joblib"
+  summary_path: "outputs/pipeline_summary.json"
 
 channels:
   canonical:
